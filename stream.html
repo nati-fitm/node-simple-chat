@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iPhone Tweet Stream</title>
+  <script type="text/javascript" src="/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  
+</head>
+<body>
+  <input type="text" id="msg"><button id="send">Send</button>
+  <hr>
+  <ul id="chats">
+  </ul>
+
+<script type="text/javascript">
+    var socket = new io.connect("http://localhost:8888");
+    socket.on('message', function(msg) {
+        console.log(msg);
+        
+        var tweet = $('<li/>');
+        tweet.html(msg);
+        
+        $('#chats').append(tweet);
+    });
+
+    $('#send').bind('click', function() {
+      socket.send($("#msg").val());
+    });
+
+  </script>
+</body>
+</html>
